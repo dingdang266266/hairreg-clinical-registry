@@ -1,165 +1,241 @@
-import { RegistryLayout } from "@/components/registry-layout";
-
-const stats = [
-  {
-    label: "Total Patients",
-    value: "32",
-    change: "+4 this month",
-    changeType: "positive" as const,
-    icon: (
-      <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-      </svg>
-    ),
-  },
-  {
-    label: "Total Treatments",
-    value: "156",
-    change: "+23 this month",
-    changeType: "positive" as const,
-    icon: (
-      <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.611L5 14.5" />
-      </svg>
-    ),
-  },
-  {
-    label: "Follow-up Rate",
-    value: "78%",
-    change: "+2.4% vs last quarter",
-    changeType: "positive" as const,
-    icon: (
-      <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-      </svg>
-    ),
-  },
-  {
-    label: "Adverse Event Rate",
-    value: "1.8%",
-    change: "Within safety threshold",
-    changeType: "neutral" as const,
-    icon: (
-      <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-      </svg>
-    ),
-  },
-];
-
-const recentActivity = [
-  { patient: "Patient #HR-029", action: "Follow-up visit completed", time: "2 hours ago" },
-  { patient: "Patient #HR-014", action: "Treatment session recorded", time: "5 hours ago" },
-  { patient: "Patient #HR-031", action: "Baseline photos uploaded", time: "Yesterday" },
-  { patient: "Patient #HR-008", action: "Adverse event logged — resolved", time: "Yesterday" },
-];
-
 export default function Home() {
+  const navItems = [
+    "数据总览",
+    "患者档案",
+    "上清液治疗记录",
+    "照片对比",
+    "AI疗效分析",
+    "科研统计",
+    "系统设置",
+  ];
+
+  const stats = [
+    { label: "入组患者", value: "32", note: "本月新增 4 人" },
+    { label: "治疗记录", value: "156", note: "上清液治疗 89 次" },
+    { label: "随访完成率", value: "78%", note: "较上月提升 2.4%" },
+    { label: "不良反应率", value: "1.8%", note: "均为轻度反应" },
+  ];
+
+  const patients = [
+    {
+      code: "HR-001",
+      name: "王某某",
+      gender: "男",
+      age: "36",
+      diagnosis: "雄激素性脱发",
+      stage: "Norwood III",
+      status: "治疗中",
+    },
+    {
+      code: "HR-002",
+      name: "李某某",
+      gender: "女",
+      age: "42",
+      diagnosis: "弥漫性脱发",
+      stage: "Ludwig I",
+      status: "随访中",
+    },
+    {
+      code: "HR-003",
+      name: "张某某",
+      gender: "男",
+      age: "29",
+      diagnosis: "发际线后移",
+      stage: "Norwood II",
+      status: "已完成",
+    },
+  ];
+
+  const treatments = [
+    { date: "2026-06-14", patient: "HR-001", item: "上清液头皮注射", dose: "5ml", doctor: "宋医生" },
+    { date: "2026-06-10", patient: "HR-002", item: "上清液联合LED照射", dose: "4ml", doctor: "李医生" },
+    { date: "2026-06-05", patient: "HR-003", item: "维持治疗", dose: "3ml", doctor: "张医生" },
+  ];
+
   return (
-    <RegistryLayout
-      title="Dashboard"
-      subtitle="Clinical registry overview"
-      headerActions={
-        <>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700 ring-1 ring-emerald-600/20">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            Registry Active
-          </span>
-          <button
-            type="button"
-            className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
-          >
-            Export Report
-          </button>
-        </>
-      }
-    >
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
-        {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm"
-          >
-            <div className="flex items-start justify-between">
+    <div className="min-h-screen bg-slate-100 text-slate-900">
+      <div className="flex min-h-screen">
+        <aside className="w-72 bg-white border-r border-slate-200 flex flex-col">
+          <div className="p-6 border-b border-slate-200">
+            <div className="flex items-center gap-3">
+              <div className="h-12 w-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center text-xl font-bold">
+                H
+              </div>
               <div>
-                <p className="text-sm font-medium text-slate-500">{stat.label}</p>
-                <p className="mt-2 text-3xl font-bold tracking-tight text-slate-900">
-                  {stat.value}
-                </p>
+                <h1 className="text-lg font-bold">HairReg</h1>
+                <p className="text-sm text-slate-500">毛发临床注册系统</p>
               </div>
-              <div className="rounded-lg bg-blue-50 p-2.5">{stat.icon}</div>
             </div>
-            <p
-              className={`mt-4 text-xs font-medium ${
-                stat.changeType === "positive"
-                  ? "text-emerald-600"
-                  : "text-slate-500"
-              }`}
-            >
-              {stat.change}
-            </p>
           </div>
-        ))}
-      </div>
 
-      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2 rounded-xl border border-slate-200 bg-white shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
-            <h2 className="text-sm font-semibold text-slate-900">Recent Activity</h2>
-            <span className="text-xs font-medium text-blue-600">View all</span>
-          </div>
-          <ul className="divide-y divide-slate-100">
-            {recentActivity.map((entry) => (
-              <li key={entry.patient} className="flex items-center justify-between px-6 py-4">
-                <div>
-                  <p className="text-sm font-medium text-slate-900">{entry.patient}</p>
-                  <p className="text-sm text-slate-500">{entry.action}</p>
-                </div>
-                <span className="text-xs text-slate-400">{entry.time}</span>
-              </li>
+          <nav className="flex-1 p-4 space-y-2">
+            {navItems.map((item, index) => (
+              <div
+                key={item}
+                className={`px-4 py-3 rounded-xl text-sm font-medium cursor-pointer ${
+                  index === 0
+                    ? "bg-blue-50 text-blue-700"
+                    : "text-slate-600 hover:bg-slate-50"
+                }`}
+              >
+                {item}
+              </div>
             ))}
-          </ul>
-        </div>
+          </nav>
 
-        <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
-          <div className="border-b border-slate-200 px-6 py-4">
-            <h2 className="text-sm font-semibold text-slate-900">Registry Status</h2>
-          </div>
-          <div className="space-y-4 p-6">
-            <div>
-              <div className="mb-1.5 flex justify-between text-xs">
-                <span className="font-medium text-slate-600">Enrollment Target</span>
-                <span className="text-slate-900">32 / 50</span>
-              </div>
-              <div className="h-2 overflow-hidden rounded-full bg-slate-100">
-                <div className="h-full w-[64%] rounded-full bg-blue-600" />
-              </div>
-            </div>
-            <div>
-              <div className="mb-1.5 flex justify-between text-xs">
-                <span className="font-medium text-slate-600">Data Completeness</span>
-                <span className="text-slate-900">91%</span>
-              </div>
-              <div className="h-2 overflow-hidden rounded-full bg-slate-100">
-                <div className="h-full w-[91%] rounded-full bg-blue-500" />
-              </div>
-            </div>
-            <div>
-              <div className="mb-1.5 flex justify-between text-xs">
-                <span className="font-medium text-slate-600">Follow-up Compliance</span>
-                <span className="text-slate-900">78%</span>
-              </div>
-              <div className="h-2 overflow-hidden rounded-full bg-slate-100">
-                <div className="h-full w-[78%] rounded-full bg-blue-400" />
-              </div>
-            </div>
-            <div className="rounded-lg bg-blue-50 px-4 py-3">
-              <p className="text-xs font-medium text-blue-800">Next scheduled review</p>
-              <p className="mt-0.5 text-sm font-semibold text-blue-900">June 28, 2026</p>
+          <div className="p-4 border-t border-slate-200">
+            <div className="rounded-xl bg-slate-50 p-4">
+              <p className="text-sm font-semibold">管理员</p>
+              <p className="text-xs text-slate-500">临床研究负责人</p>
             </div>
           </div>
-        </div>
+        </aside>
+
+        <main className="flex-1">
+          <header className="bg-white border-b border-slate-200 px-8 py-5 flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold">数据总览</h2>
+              <p className="text-sm text-slate-500">上清液生发临床注册中心 V1.1</p>
+            </div>
+            <div className="flex gap-3">
+              <button className="px-4 py-2 rounded-xl border border-slate-200 text-sm">
+                导出报告
+              </button>
+              <button className="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm">
+                新增患者
+              </button>
+            </div>
+          </header>
+
+          <div className="p-8 space-y-8">
+            <section className="grid grid-cols-4 gap-5">
+              {stats.map((item) => (
+                <div key={item.label} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                  <p className="text-sm text-slate-500">{item.label}</p>
+                  <p className="text-3xl font-bold mt-3">{item.value}</p>
+                  <p className="text-sm text-emerald-600 mt-3">{item.note}</p>
+                </div>
+              ))}
+            </section>
+
+            <section className="grid grid-cols-3 gap-6">
+              <div className="col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                <div className="p-5 border-b border-slate-200 flex justify-between">
+                  <h3 className="font-bold">患者档案</h3>
+                  <span className="text-sm text-blue-600">查看全部</span>
+                </div>
+                <table className="w-full text-sm">
+                  <thead className="bg-slate-50 text-slate-500">
+                    <tr>
+                      <th className="text-left p-4">编号</th>
+                      <th className="text-left p-4">姓名</th>
+                      <th className="text-left p-4">性别</th>
+                      <th className="text-left p-4">年龄</th>
+                      <th className="text-left p-4">诊断</th>
+                      <th className="text-left p-4">分级</th>
+                      <th className="text-left p-4">状态</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {patients.map((p) => (
+                      <tr key={p.code} className="border-t border-slate-100">
+                        <td className="p-4 font-medium text-blue-700">{p.code}</td>
+                        <td className="p-4">{p.name}</td>
+                        <td className="p-4">{p.gender}</td>
+                        <td className="p-4">{p.age}</td>
+                        <td className="p-4">{p.diagnosis}</td>
+                        <td className="p-4">{p.stage}</td>
+                        <td className="p-4">
+                          <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs">
+                            {p.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                <h3 className="font-bold mb-5">AI疗效分析</h3>
+                <div className="space-y-4 text-sm">
+                  <div className="p-4 rounded-xl bg-blue-50">
+                    <p className="font-semibold text-blue-700">总体判断</p>
+                    <p className="text-slate-600 mt-2">近期患者毛发覆盖率呈改善趋势，T3随访节点效果较明显。</p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-emerald-50">
+                    <p className="font-semibold text-emerald-700">风险提示</p>
+                    <p className="text-slate-600 mt-2">不良反应率处于安全阈值范围内。</p>
+                  </div>
+                  <button className="w-full bg-blue-600 text-white rounded-xl py-3">
+                    生成AI疗效报告
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <section className="grid grid-cols-2 gap-6">
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm">
+                <div className="p-5 border-b border-slate-200">
+                  <h3 className="font-bold">上清液治疗记录</h3>
+                </div>
+                <div className="divide-y divide-slate-100">
+                  {treatments.map((t) => (
+                    <div key={t.date + t.patient} className="p-5 flex justify-between text-sm">
+                      <div>
+                        <p className="font-semibold">{t.patient}｜{t.item}</p>
+                        <p className="text-slate-500 mt-1">剂量：{t.dose}｜医生：{t.doctor}</p>
+                      </div>
+                      <span className="text-slate-500">{t.date}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                <h3 className="font-bold mb-5">照片对比</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="h-56 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400">
+                    T0 基线照片
+                  </div>
+                  <div className="h-56 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400">
+                    T3 三月随访
+                  </div>
+                </div>
+                <div className="mt-4 grid grid-cols-4 gap-2 text-xs text-center text-slate-500">
+                  <div className="bg-slate-50 rounded-lg py-2">正面</div>
+                  <div className="bg-slate-50 rounded-lg py-2">顶部</div>
+                  <div className="bg-slate-50 rounded-lg py-2">左侧</div>
+                  <div className="bg-slate-50 rounded-lg py-2">右侧</div>
+                </div>
+              </div>
+            </section>
+
+            <section className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+              <h3 className="font-bold mb-5">科研统计模块</h3>
+              <div className="grid grid-cols-5 gap-4">
+                {[
+                  ["样本量", "32"],
+                  ["平均年龄", "37.8岁"],
+                  ["平均治疗次数", "4.2次"],
+                  ["T3有效率", "81%"],
+                  ["满意度", "4.5/5"],
+                ].map(([label, value]) => (
+                  <div key={label} className="rounded-xl bg-slate-50 p-5">
+                    <p className="text-sm text-slate-500">{label}</p>
+                    <p className="text-2xl font-bold mt-2">{value}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 flex gap-3">
+                <button className="px-4 py-2 rounded-xl border border-slate-200 text-sm">导出Excel</button>
+                <button className="px-4 py-2 rounded-xl border border-slate-200 text-sm">生成科研摘要</button>
+                <button className="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm">生成统计报告</button>
+              </div>
+            </section>
+          </div>
+        </main>
       </div>
-    </RegistryLayout>
+    </div>
   );
 }
