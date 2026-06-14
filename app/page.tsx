@@ -1,14 +1,16 @@
-export default function Home() {
-  const navItems = [
-    "数据总览",
-    "患者档案",
-    "上清液治疗记录",
-    "照片对比",
-    "AI疗效分析",
-    "科研统计",
-    "系统设置",
-  ];
+import Link from "next/link";
 
+const navItems = [
+  { label: "数据总览", href: "/" },
+  { label: "患者档案", href: "/patients" },
+  { label: "上清液治疗记录", href: "/treatments" },
+  { label: "照片对比", href: "/photos" },
+  { label: "AI疗效分析", href: null },
+  { label: "科研统计", href: "/research" },
+  { label: "系统设置", href: "/settings" },
+];
+
+export default function Home() {
   const stats = [
     { label: "入组患者", value: "32", note: "本月新增 4 人" },
     { label: "治疗记录", value: "156", note: "上清液治疗 89 次" },
@@ -69,18 +71,28 @@ export default function Home() {
           </div>
 
           <nav className="flex-1 p-4 space-y-2">
-            {navItems.map((item, index) => (
-              <div
-                key={item}
-                className={`px-4 py-3 rounded-xl text-sm font-medium cursor-pointer ${
-                  index === 0
-                    ? "bg-blue-50 text-blue-700"
-                    : "text-slate-600 hover:bg-slate-50"
-                }`}
-              >
-                {item}
-              </div>
-            ))}
+            {navItems.map((item) => {
+              const isActive = item.href === "/";
+              const className = `block px-4 py-3 rounded-xl text-sm font-medium ${
+                isActive
+                  ? "bg-blue-50 text-blue-700"
+                  : "text-slate-600 hover:bg-slate-50"
+              }`;
+
+              if (!item.href) {
+                return (
+                  <div key={item.label} className={className}>
+                    {item.label}
+                  </div>
+                );
+              }
+
+              return (
+                <Link key={item.label} href={item.href} className={className}>
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="p-4 border-t border-slate-200">
@@ -101,9 +113,12 @@ export default function Home() {
               <button className="px-4 py-2 rounded-xl border border-slate-200 text-sm">
                 导出报告
               </button>
-              <button className="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm">
+              <Link
+                href="/patients"
+                className="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm"
+              >
                 新增患者
-              </button>
+              </Link>
             </div>
           </header>
 
@@ -122,7 +137,9 @@ export default function Home() {
               <div className="col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm">
                 <div className="p-5 border-b border-slate-200 flex justify-between">
                   <h3 className="font-bold">患者档案</h3>
-                  <span className="text-sm text-blue-600">查看全部</span>
+                  <Link href="/patients" className="text-sm text-blue-600 hover:text-blue-700">
+                    查看全部
+                  </Link>
                 </div>
                 <table className="w-full text-sm">
                   <thead className="bg-slate-50 text-slate-500">
